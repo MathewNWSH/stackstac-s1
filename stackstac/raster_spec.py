@@ -54,10 +54,10 @@ class RasterSpec:
 
     @cached_property
     def vrt_params(self) -> dict:
+        height, width = self.shape
         return {
-            "crs": self.gcps[1],
-            "transform": transform.from_gcps(self.gcps[0]),
-            "nodata": self.nodata,
-            "add_alpha": False,
-            "src_nodata": self.nodata,
+            "crs": self.epsg,
+            "transform": self.transform,
+            "height": height,
+            "width": width,
         }
