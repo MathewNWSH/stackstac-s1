@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING, Optional, Protocol, Tuple, Type, TypedDict, Un
 
 import numpy as np
 import rasterio as rio
+from rasterio.transform import from_gcps
 from rasterio.vrt import WarpedVRT
 
 from .rio_env import LayeredEnv
@@ -343,10 +344,10 @@ class AutoParallelRioReader:
 
             # Only make a VRT if the dataset doesn't match the spatial spec we want
             if self.spec.vrt_params != {
-                "crs": ds.crs.to_epsg(),
-                "transform": ds.transform,
-                "height": ds.height,
-                "width": ds.width,
+                "crs": ds.gcps[1],
+                "transform": from_gcps(ds.gcps[0]),
+                # "height": ds.height,
+                # "width": ds.width,
             }:
                 with self.gdal_env.open_vrt:
                     vrt = WarpedVRT(
