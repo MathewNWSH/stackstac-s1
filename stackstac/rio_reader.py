@@ -7,7 +7,8 @@ from typing import TYPE_CHECKING, Optional, Protocol, Tuple, Type, TypedDict, Un
 
 import numpy as np
 import rasterio as rio
-from rasterio.transform import transform, from_gcps
+from rasterio import transform
+from rasterio.transform import from_gcps
 from rasterio.vrt import WarpedVRT
 
 from .rio_env import LayeredEnv
