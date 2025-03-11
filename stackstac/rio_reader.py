@@ -345,20 +345,12 @@ class AutoParallelRioReader:
 
             # Only make a VRT if the dataset doesn't match the spatial spec we want
             if self.spec.vrt_params != {
-                "crs": ds.gcps[1],
-                "transform": transform.from_gcps(ds.gcps[0]),
-                "nodata": ds.nodata,
-                "add_alpha": False,
-                "src_nodata": ds.nodata,
-                # "height": ds.height,
-                # "width": ds.width,
             }:
                 with self.gdal_env.open_vrt:
                     vrt = WarpedVRT(
                         ds,
                         sharing=False,
                         resampling=self.resampling,
-                        add_alpha=ds.nodata is None,
                         **self.spec.vrt_params,
                     )
             else:
